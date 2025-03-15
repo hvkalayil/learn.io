@@ -1,1 +1,1 @@
-export const PORT = Deno.env.get("PORT") || "8000";
+export const PORT = Deno.env.get("PORT") || "4000";

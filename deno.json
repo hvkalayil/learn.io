@@ -1,7 +1,9 @@
 {
   "tasks": {
     "setup": "git config core.hooksPath .githooks",
-    "dev:api": "deno run --allow-env --allow-net --watch apps/api/main.ts"
+    "dev:api": "deno run --allow-env --allow-net --watch apps/api/main.ts",
+    "dev:web": "cd apps/web && deno task start",
+    "start": "deno task dev:api & deno task dev:web"
   },
   "imports": {
     "@oak/oak": "jsr:@oak/oak@^17.1.4"
