@@ -1,0 +1,24 @@
+#!/bin/sh
+
+deno fmt --check --ignore=README.md
+if [ $? -ne 0 ]; then
+  # Unstaging changes
+  git restore --staged .
+  echo "❌ Formatting issues found. Run 'deno fmt' to fix."
+  echo "ℹ️  Your changes will be unstaged"
+  exit 1
+fi
+echo "✅ Formatting passed!"
+
+deno lint
+if [ $? -ne 0 ]; then
+  # Unstaging changes
+  git restore --staged .
+  echo "❌ Linting issues found. Run 'deno lint' to fix."
+  echo "ℹ️  Your changes will be unstaged"
+  exit 1
+fi
+echo "✅ Linting passed!"
+
+echo "✅ All checks passed! Committing..."
+exit 0
