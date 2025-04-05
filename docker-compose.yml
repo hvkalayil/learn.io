@@ -14,3 +14,10 @@ services:
       dockerfile: Dockerfile
     ports:
       - "1002:4000"
+
+  learnio-db:
+    build:
+      context: apps/db
+      dockerfile: Dockerfile
+    ports:
+      - "1003:4001"
