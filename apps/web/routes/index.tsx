@@ -1,21 +1,14 @@
-import { Handlers, PageProps } from "$fresh/server.ts";
-import { apiFetch } from "../lib/http.ts";
+import { HeaderBar } from "../components/HeaderBar.tsx";
+import { Tabs } from "../islands/Tabs.tsx";
 
-const handler: Handlers = {
-  async GET(_, ctx) {
-    try {
-      const result = await apiFetch("/health", "GET");
-      return ctx.render(result);
-    } catch (error) {
-      console.log(error);
-      return new Response("Failed to call the Almighty API", { status: 500 });
-    }
-  },
-};
+export default function Home() {
+  return (
+    <div>
+      <HeaderBar />
 
-export default function Home({ data }: PageProps) {
-  console.log(data);
-  return <h1>Hello World. I am {`${data.health}`}</h1>;
+      <main className="p-4 flex flex-col justify-center items-center gap-2">
+        <Tabs />
+      </main>
+    </div>
+  );
 }
-
-export { handler };
