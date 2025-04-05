@@ -1,9 +1,9 @@
 {
   "tasks": {
     "setup": "git config core.hooksPath .githooks",
-    "dev:api": "deno run --allow-env --allow-net --allow-read --watch apps/api/main.ts",
+    "dev:api": "cd apps/api && deno task start",
     "dev:web": "cd apps/web && deno task start",
-    "dev:db": "deno run --allow-env --allow-net --allow-read --watch apps/db/main.ts",
+    "dev:db": "cd apps/db && deno task start",
     "start": "deno task dev:api & deno task dev:web & deno task dev:db"
   }
 }
