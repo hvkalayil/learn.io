@@ -6,6 +6,7 @@ import {
   createSchema,
   seedData,
 } from "../service/db.service.ts";
+import { authMiddleware } from "../middleware/auth.ts";
 
 const router = new Router();
 
@@ -17,6 +18,9 @@ setupSwagger(router);
  *   get:
  *     summary: Health Check
  *     description: Endpoint to check the health of the database connection and retrieve the current database time.
+ *     parameters:
+ *       - $ref: '#/components/parameters/AuthUsername'
+ *       - $ref: '#/components/parameters/AuthPassword'
  *     responses:
  *       200:
  *         description: Returns the health status and the current database time.
@@ -45,7 +49,7 @@ setupSwagger(router);
  *                   type: object
  *                   example: { "message": "Database connection failed" }
  */
-router.get("/health", async (context) => {
+router.get("/health", authMiddleware, async (context) => {
   try {
     const db = await getDbClient();
     const result = await db.queryObject("SELECT NOW()");
@@ -63,6 +67,9 @@ router.get("/health", async (context) => {
  *   get:
  *     summary: Create Schema
  *     description: Endpoint to create the database schema. Run this if setting up database for the first time
+ *     parameters:
+ *       - $ref: '#/components/parameters/AuthUsername'
+ *       - $ref: '#/components/parameters/AuthPassword'
  *     responses:
  *       200:
  *         description: Returns success message and list of schemas created.
@@ -93,7 +100,7 @@ router.get("/health", async (context) => {
  *                   type: object
  *                   example: { "message": "Transaction failed" }
  */
-router.get("/create", async (context) => {
+router.get("/create", authMiddleware, async (context) => {
   try {
     const db = await getDbClient();
     const result = await createSchema(db);
@@ -114,6 +121,9 @@ router.get("/create", async (context) => {
  *   get:
  *     summary: Seed data
  *     description: Endpoint to create seeding data.
+ *     parameters:
+ *       - $ref: '#/components/parameters/AuthUsername'
+ *       - $ref: '#/components/parameters/AuthPassword'
  *     responses:
  *       200:
  *         description: Returns success message and list of data added.
@@ -144,7 +154,7 @@ router.get("/create", async (context) => {
  *                   type: object
  *                   example: { "message": "Transaction failed" }
  */
-router.get("/seed", async (context) => {
+router.get("/seed", authMiddleware, async (context) => {
   try {
     const db = await getDbClient();
     const result = await seedData(db);
@@ -165,6 +175,9 @@ router.get("/seed", async (context) => {
  *   get:
  *     summary: Apply migrations
  *     description: Endpoint to apply migrations required..
+ *     parameters:
+ *       - $ref: '#/components/parameters/AuthUsername'
+ *       - $ref: '#/components/parameters/AuthPassword'
  *     responses:
  *       200:
  *         description: Returns success message and list of migrations applied.
@@ -201,7 +214,7 @@ router.get("/seed", async (context) => {
  *                   type: object
  *                   example: { "message": "Transaction failed" }
  */
-router.get("/migrate", async (context) => {
+router.get("/migrate", authMiddleware, async (context) => {
   try {
     const db = await getDbClient();
     const result = await applyMigrations(db);
