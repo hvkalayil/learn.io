@@ -32,6 +32,28 @@ const apiSpec = {
       title: "Learn.io DB Tools",
       version: "1.0.0",
     },
+    components: {
+      parameters: {
+        AuthUsername: {
+          name: "username",
+          in: "query",
+          required: true,
+          schema: {
+            type: "string",
+          },
+          description: "DB username",
+        },
+        AuthPassword: {
+          name: "password",
+          in: "query",
+          required: true,
+          schema: {
+            type: "string",
+          },
+          description: "DB password",
+        },
+      },
+    },
   },
   apis: [] as string[],
 };

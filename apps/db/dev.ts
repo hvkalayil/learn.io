@@ -6,4 +6,4 @@ await load({
   export: true,
 });
 
-import "./main.ts";
+await import("./main.ts");
