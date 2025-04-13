@@ -21,3 +21,5 @@ services:
       dockerfile: Dockerfile
     ports:
       - "1003:4001"
+    env_file:
+      - .db.env
