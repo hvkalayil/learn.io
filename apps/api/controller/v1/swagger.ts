@@ -32,6 +32,35 @@ const apiSpec = {
       title: "Learn.io",
       version: "1.0.0",
     },
+    components: {
+      schemas: {
+        Guide: {
+          type: "object",
+          properties: {
+            id: { type: "string" },
+            title: { type: "string" },
+            description: { type: "string" },
+            cover_image_url: { type: "string", format: "uri" },
+            difficulty_level: { type: "string" },
+            creator_id: { type: "string" },
+            status: { type: "string" },
+            created_at: { type: "string", format: "date-time" },
+            published_at: { type: "string", format: "date-time" },
+          },
+          required: [
+            "id",
+            "title",
+            "description",
+            "cover_image_url",
+            "difficulty_level",
+            "creator_id",
+            "status",
+            "created_at",
+            "published_at",
+          ],
+        },
+      },
+    },
   },
   apis: [] as string[],
 };
@@ -50,19 +79,19 @@ async function initializeSwagger(router: Router) {
 }
 
 async function getSwaggerSpecFile() {
-  apiSpec.apis = await getAllTsFiles(Deno.cwd());
+  apiSpec.apis = await getAllYmlFiles(Deno.cwd());
   return swaggerJsDoc(apiSpec);
 }
 
-async function getAllTsFiles(dir: string): Promise<string[]> {
+async function getAllYmlFiles(dir: string): Promise<string[]> {
   const entries: string[] = [];
 
   for await (const entry of Deno.readDir(dir)) {
     const fullPath = `${dir}/${entry.name}`;
     if (entry.isDirectory) {
-      const subEntries = await getAllTsFiles(fullPath);
+      const subEntries = await getAllYmlFiles(fullPath);
       entries.push(...subEntries);
-    } else if (entry.isFile && entry.name.endsWith(".ts")) {
+    } else if (entry.isFile && entry.name.endsWith(".yml")) {
       entries.push(fullPath);
     }
   }
