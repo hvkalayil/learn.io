@@ -1,4 +1,4 @@
-/v1/home/guides:
+/v1/home:
   get:
     summary: List of Guides for homepage
     description: Returns a list of guides for the homepage.

@@ -1,11 +1,21 @@
-import { Client } from "https://deno.land/x/postgres@v0.19.3/mod.ts";
-import { Guide } from "../model/guide.ts";
+import { Guide } from "../database/model/guide.ts";
+import { DbService } from "./db.service.ts";
 
-export const getGuideList = async (db: Client) => {
-  const guides = await db.queryObject<Guide>(`
-        SELECT * FROM guides
-        WHERE status='published'
-        ORDER BY published_at DESC;
-    `);
-  return guides.rows;
-};
+export class HomePageService {
+  static async getHomePageData(): Promise<{
+    featured: Guide[];
+  }> {
+    const [featured] = await Promise.all([
+      this.getFeaturedGuides(),
+    ]);
+    return { featured };
+  }
+
+  private static async getFeaturedGuides() {
+    return await DbService.executeQuery<Guide>(`
+          SELECT * FROM guides
+          WHERE status='published'
+          ORDER BY published_at DESC;
+      `);
+  }
+}
