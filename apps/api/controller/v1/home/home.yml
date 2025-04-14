@@ -1,0 +1,29 @@
+/v1/home/guides:
+  get:
+    summary: List of Guides for homepage
+    description: Returns a list of guides for the homepage.
+    responses:
+      200:
+        description: Successful response.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                guides:
+                  type: array
+                  items:
+                    $ref: "#/components/schemas/Guide"
+      500:
+        description: Internal Server Error.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message:
+                  type: string
+                  example: "Internal Server Error"
+                error:
+                  type: object
+                  example: { "message": "Database connection failed" }
