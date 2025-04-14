@@ -1,13 +1,13 @@
 import { Application, Router } from "@oak/oak";
-import apiV1 from "./controller/v1/index.ts";
 import { HOST, PORT } from "./config.ts";
 import { logger } from "./middleware/logger.ts";
+import v1Router from "./router/v1/v1.router.ts";
 
 const app = new Application();
 const router = new Router();
 
 app.use(logger);
-app.use(apiV1.routes());
+app.use(v1Router.routes());
 
 router.get("/", (context) => {
   context.response.redirect("/v1/docs");

@@ -16,7 +16,7 @@ const swaggerTemplate = `
           <script>
               window.onload = function() {
                   const ui = SwaggerUIBundle({
-                      url: "/docs-json",
+                      url: "/v1/docs-json",
                       dom_id: '#swagger-ui',
                   });
               };
@@ -72,19 +72,19 @@ async function initializeSwagger(router: Router) {
 }
 
 async function getSwaggerSpecFile() {
-  apiSpec.apis = await getAllTsFiles(Deno.cwd());
+  apiSpec.apis = await getAllYmlFiles(Deno.cwd());
   return swaggerJsDoc(apiSpec);
 }
 
-async function getAllTsFiles(dir: string): Promise<string[]> {
+async function getAllYmlFiles(dir: string): Promise<string[]> {
   const entries: string[] = [];
 
   for await (const entry of Deno.readDir(dir)) {
     const fullPath = `${dir}/${entry.name}`;
     if (entry.isDirectory) {
-      const subEntries = await getAllTsFiles(fullPath);
+      const subEntries = await getAllYmlFiles(fullPath);
       entries.push(...subEntries);
-    } else if (entry.isFile && entry.name.endsWith(".ts")) {
+    } else if (entry.isFile && entry.name.endsWith(".yml")) {
       entries.push(fullPath);
     }
   }
