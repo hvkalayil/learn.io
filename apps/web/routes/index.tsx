@@ -13,7 +13,7 @@ export const handler: Handlers<HomePageData> = {
 
 export default function Home({ data }: PageProps<HomePageData>) {
   return (
-    <div>
+    <div className="subtle-gradient min-h-screen">
       <HeaderBar />
 
       <main className="p-4 flex flex-col justify-center items-center gap-2">

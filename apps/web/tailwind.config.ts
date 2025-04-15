@@ -11,6 +11,15 @@ export default {
         secondary: "oklch(0.46 0.0479 236.76)",
         accent: "oklch(77.425% 0.13127 218.05)",
       },
+      keyframes: {
+        float: {
+          "0%, 100%": { transform: "translateY(0)" },
+          "50%": { transform: "translateY(-2.5px)" },
+        },
+      },
+      animation: {
+        float: "float 2s ease-in-out infinite",
+      },
     },
   },
   plugins: [

@@ -28,7 +28,7 @@ export function Tabs({ data }: { data: HomePageData }) {
 
   return (
     <HomePageProvider data={data}>
-      <div className="w-full rounded-xl shadow-md p-6">
+      <div className="w-full p-6">
         <div className="flex mb-8 relative">
           <div className="absolute h-12 w-full subtle-gradient rounded-full" />
 
@@ -57,7 +57,7 @@ export function Tabs({ data }: { data: HomePageData }) {
         </div>
 
         {/* Content Area with Animation */}
-        <div className="subtle-gradient rounded-lg p-6 min-h-64 shadow-inner">
+        <div className="p-6 min-h-64">
           {activeTab === "All Guides" && (
             <div className="animate-fadeIn">
               <AllGuides />

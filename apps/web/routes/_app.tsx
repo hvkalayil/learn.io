@@ -11,6 +11,18 @@ export default function App({ Component }: PageProps) {
       </head>
       <body className="text-white bg-secondary shadow-[0px_0px_1000px_#2bc9ed14_inset]">
         <Component />
+
+        <footer className="font-mono text-center">
+          <p>
+            <a
+              href="http://hvkalayil.github.io"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              By HVK
+            </a>
+          </p>
+        </footer>
       </body>
     </html>
   );

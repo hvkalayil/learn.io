@@ -3,7 +3,7 @@ import { LoveIcon } from "./icons/LoveIcon.tsx";
 
 export function GuideCard({ guide }: { guide: Guide }) {
   return (
-    <div className="max-w-sm rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all bg-secondary subtle-gradient-reverse">
+    <div className="hover:animate-float max-w-sm rounded-xl overflow-hidden shadow-2xl transition-all bg-secondary subtle-gradient-reverse">
       <div className="relative">
         <img
           src={guide.cover_image_url}
