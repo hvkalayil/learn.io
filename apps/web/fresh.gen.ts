@@ -4,6 +4,8 @@
 
 import * as $_404 from "./routes/_404.tsx";
 import * as $_app from "./routes/_app.tsx";
+import * as $auth_login from "./routes/auth/login.tsx";
+import * as $auth_verifyLogin from "./routes/auth/verifyLogin.tsx";
 import * as $index from "./routes/index.tsx";
 import * as $Tabs from "./islands/Tabs.tsx";
 import type { Manifest } from "$fresh/server.ts";
@@ -12,6 +14,8 @@ const manifest = {
   routes: {
     "./routes/_404.tsx": $_404,
     "./routes/_app.tsx": $_app,
+    "./routes/auth/login.tsx": $auth_login,
+    "./routes/auth/verifyLogin.tsx": $auth_verifyLogin,
     "./routes/index.tsx": $index,
   },
   islands: {

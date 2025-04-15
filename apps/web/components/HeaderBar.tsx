@@ -16,13 +16,14 @@ export function HeaderBar() {
           <span className="hidden sm:inline">Profile</span>
         </button>
 
-        <button
+        <a
+          href="/auth/login"
           type="button"
           className="flex items-center gap-2 px-4 py-2 rounded-full shadow-md transition-transform transform hover:subtle-gradient subtle-gradient-reverse"
         >
           <LoginIcon />
           <span className="hidden sm:inline">Login</span>
-        </button>
+        </a>
       </nav>
     </header>
   );

@@ -2,7 +2,7 @@ import { API_URL } from "../config.ts";
 
 export async function apiFetch<T>(
   url: string,
-  method: "GET",
+  method: "GET" | "POST",
   body?: object,
 ): Promise<T> {
   const options: RequestInit = {
@@ -16,7 +16,7 @@ export async function apiFetch<T>(
   const response = await fetch(API_URL + url, options);
 
   if (!response.ok) {
-    throw new Error(response.statusText);
+    throw new Error(response?.statusText ?? "API Failed");
   }
   return response.json();
 }
