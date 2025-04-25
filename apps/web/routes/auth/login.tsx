@@ -17,6 +17,10 @@ function getErrorMessage(err: string) {
       result = "Server took a nap. Try again later. 💤";
       break;
 
+    case "E4":
+      result = "Session expired. Login again 💤";
+      break;
+
     default:
       break;
   }

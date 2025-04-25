@@ -1,0 +1,106 @@
+/v1/auth/login:
+  post:
+    summary: Register/Login a user
+    description: Returns tokens for accessing protected routes
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              email:
+                type: string
+                example: "sample@test.com"
+              password:
+                type: string
+                example: "test"
+    responses:
+      200:
+        description: Successful response.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                accessToken:
+                  type: string
+                  example: "JWT Token. Expiring in 1 hour"
+                refreshToken:
+                  type: string
+                  example: "JWT Token. Expiring in 1 week"
+      401:
+        description: Verification error response
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message:
+                  type: string
+                  example: "Runtime Error: Login failed"
+      500:
+        description: Internal Server Error.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message:
+                  type: string
+                  example: "Internal Server Error"
+                error:
+                  type: object
+                  example: { "message": "Error: Login Failed" }
+
+/v1/auth/refresh:
+  post:
+    summary: Refreshes auth tokens
+    description: Returns tokens for accessing protected routes
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              refreshToken:
+                type: string
+                example: "JWT Token"
+    responses:
+      200:
+        description: Successful response.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                accessToken:
+                  type: string
+                  example: "JWT Token. Expiring in 1 hour"
+                refreshToken:
+                  type: string
+                  example: "JWT Token. Expiring in 1 week"
+      401:
+        description: Verification error response
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message:
+                  type: string
+                  example: "Runtime Error: Login failed"
+      500:
+        description: Internal Server Error.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message:
+                  type: string
+                  example: "Internal Server Error"
+                error:
+                  type: object
+                  example: { "message": "Error: Login Failed" }

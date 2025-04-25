@@ -1,4 +1,5 @@
 import { Handlers } from "$fresh/server.ts";
+import { getSetCookieHeader } from "../../lib/cookie.ts";
 import { apiFetch } from "../../lib/http.ts";
 
 export const handler: Handlers = {
@@ -12,22 +13,26 @@ export const handler: Handlers = {
         return Response.redirect("/auth/login?error=E1", 303);
       }
 
-      const result = await apiFetch<{
-        status: string;
-      }>("/auth/login", "POST", {
-        email,
-        password,
+      const response = await apiFetch(req, {
+        url: "/auth/login",
+        method: "POST",
+        body: {
+          email,
+          password,
+        },
       });
 
-      if (result.status !== "OK") {
+      if (response.status !== 200) {
         return Response.redirect("/auth/login?error=E2", 303);
       }
 
+      const result: { accessToken: string; refreshToken: string } =
+        await response.json();
+
+      const redirectHeader = getSetCookieHeader("/", result);
       return new Response(null, {
         status: 303,
-        headers: new Headers({
-          Location: "/",
-        }),
+        headers: redirectHeader,
       });
     } catch (error) {
       console.log(error);

@@ -8,7 +8,9 @@ export const createSchema = async (db: Client) => {
   await transaction.queryObject(`
     CREATE TABLE IF NOT EXISTS users (
       id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-      username TEXT UNIQUE NOT NULL,
+      email TEXT UNIQUE NOT NULL,
+      password TEXT UNIQUE NOT NULL,
+      type TEXT CHECK (type IN ('admin', 'learner', 'teacher')) DEFAULT 'learner',
       created_at TIMESTAMPTZ DEFAULT now()
     );`);
   result.schemasCreated.push("users (created/already exists)");
@@ -47,6 +49,17 @@ export const createSchema = async (db: Client) => {
       status TEXT CHECK (status IN ('applied', 'pending')) DEFAULT 'applied'
     );`);
   result.schemasCreated.push("migrations (created/already exists)");
+
+  await transaction.queryObject(`
+    GRANT INSERT, SELECT, UPDATE, DELETE ON TABLE
+     public.guides TO learnio_user;
+    GRANT INSERT, SELECT, UPDATE, DELETE ON TABLE
+     public.migrations TO learnio_user;
+    GRANT INSERT, SELECT, UPDATE, DELETE ON TABLE
+     public.pages TO learnio_user;
+    GRANT INSERT, SELECT, UPDATE, DELETE ON TABLE
+     public.users TO learnio_user;
+  `);
 
   await transaction.commit();
   return result;

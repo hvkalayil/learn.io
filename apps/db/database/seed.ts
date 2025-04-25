@@ -9,7 +9,7 @@ interface GuideModel {
   cover_image_url: string;
   difficulty_level: string;
   status: string;
-  username: string;
+  email: string;
   pages: PageModel[];
 }
 interface PageModel {
@@ -26,7 +26,7 @@ const SEED_DATA_GUIDES: GuideModel[] = [
       "https://hvkalayil.github.io/_astro/tarzan%20deploying.Dng-ET2Z_2tBT5k.webp",
     difficulty_level: "intermediate",
     status: "published",
-    username: "empuran",
+    email: "empuran",
     pages: [
       {
         title: "How to be a Tarzan Developer",
@@ -45,7 +45,7 @@ export const seedData = async (db: Client) => {
   await transaction.begin();
 
   for (const guide of SEED_DATA_GUIDES) {
-    const { userId, ucount } = await getUserId(transaction, guide.username);
+    const { userId, ucount } = await getUserId(transaction, guide.email);
     userCount += ucount;
     const { guideId, gcount } = await getGuideId(transaction, userId, guide);
     guideCount += gcount;
@@ -63,9 +63,9 @@ export const seedData = async (db: Client) => {
   };
 };
 
-async function getUserId(transaction: Transaction, username: string) {
+async function getUserId(transaction: Transaction, email: string) {
   const userSeedResult = await transaction.queryObject<{ id: string }>(`
-      INSERT INTO users (username) VALUES ('${username}') ON CONFLICT DO NOTHING RETURNING id;
+      INSERT INTO users (email,password,type) VALUES ('${email}', 'cicada', 'admin') ON CONFLICT DO NOTHING RETURNING id;
     `);
 
   let userId: string;
@@ -75,7 +75,7 @@ async function getUserId(transaction: Transaction, username: string) {
     ucount = 1;
   } else {
     const existingUser = await transaction.queryObject<{ id: string }>(`
-        SELECT id FROM users WHERE username='empuran';
+        SELECT id FROM users WHERE email='empuran';
       `);
     userId = existingUser.rows[0].id;
     ucount = 0;
