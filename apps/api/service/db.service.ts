@@ -16,4 +16,25 @@ export class DbService {
     const result = await db.queryObject("SELECT NOW()");
     return result;
   }
+
+  static async executeTransaction<T>(
+    name: string,
+    queries: { query: string; args?: QueryArguments | undefined }[],
+  ) {
+    const results = [];
+    const db = await getDbClient();
+    const transaction = await db.createTransaction(name);
+    try {
+      await transaction.begin();
+      for (const { query, args } of queries) {
+        const res = await transaction.queryObject<T>(query, args);
+        results.push(...res.rows);
+      }
+      await transaction.commit();
+    } catch (error) {
+      console.error(error);
+      await transaction.rollback();
+    }
+    return results;
+  }
 }

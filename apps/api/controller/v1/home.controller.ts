@@ -1,15 +1,16 @@
 import { Context } from "@oak/oak";
 import { HomePageService } from "../../service/homepage.service.ts";
+import { TokenPayload } from "../../service/auth.service.ts";
+import { sendErrorResponse } from "../../utils/response.ts";
 
 export const homeController = {
   home: async (context: Context) => {
     try {
-      const result = await HomePageService.getHomePageData();
+      const user = context.state.user as TokenPayload;
+      const result = await HomePageService.getHomePageData(user);
       context.response.body = result;
     } catch (error) {
-      console.error(error);
-      context.response.status = 500;
-      context.response.body = { message: "Internal Server Error", error };
+      sendErrorResponse(context, error);
     }
   },
 };
