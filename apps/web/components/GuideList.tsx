@@ -1,4 +1,4 @@
-import { Guide } from "../context/homepage/types.ts";
+import { Guide } from "../lib/models/Guide.ts";
 import { GuideCard } from "./GuideCard.tsx";
 
 export function GuideList({ guides }: { guides: Guide[] }) {

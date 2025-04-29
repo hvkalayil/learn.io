@@ -8,6 +8,10 @@ import * as $auth_login from "./routes/auth/login.tsx";
 import * as $auth_verifyLogin from "./routes/auth/verifyLogin.tsx";
 import * as $index from "./routes/index.tsx";
 import * as $Tabs from "./islands/Tabs.tsx";
+import * as $TokenPersistor from "./islands/TokenPersistor.tsx";
+import * as $homepage_AllGuides from "./islands/homepage/AllGuides.tsx";
+import * as $homepage_TeacherDasboard from "./islands/homepage/TeacherDasboard.tsx";
+import * as $homepage_YourLearning from "./islands/homepage/YourLearning.tsx";
 import type { Manifest } from "$fresh/server.ts";
 
 const manifest = {
@@ -20,6 +24,10 @@ const manifest = {
   },
   islands: {
     "./islands/Tabs.tsx": $Tabs,
+    "./islands/TokenPersistor.tsx": $TokenPersistor,
+    "./islands/homepage/AllGuides.tsx": $homepage_AllGuides,
+    "./islands/homepage/TeacherDasboard.tsx": $homepage_TeacherDasboard,
+    "./islands/homepage/YourLearning.tsx": $homepage_YourLearning,
   },
   baseUrl: import.meta.url,
 } satisfies Manifest;

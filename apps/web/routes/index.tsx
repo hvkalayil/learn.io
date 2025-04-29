@@ -1,33 +1,42 @@
-import { Handlers, PageProps } from "$fresh/server.ts";
+import { FreshContext, PageProps } from "$fresh/server.ts";
 import { HeaderBar } from "../components/HeaderBar.tsx";
-import { HomePageData } from "../context/homepage/types.ts";
 import { Tabs } from "../islands/Tabs.tsx";
-import { apiFetch, RedirectError } from "../lib/http.ts";
+import { TokenPersistor } from "../islands/TokenPersistor.tsx";
+import { getAccessToken, RedirectError } from "../lib/auth.ts";
 
-export const handler: Handlers<HomePageData> = {
-  async GET(req, ctx) {
-    try {
-      const response = await apiFetch(req, { url: "/home", method: "GET" });
-      const result: HomePageData = await response.json();
-      return ctx.render(result);
-    } catch (error) {
-      console.error(error);
-      if (error instanceof RedirectError) {
-        return new Response(null, { status: 303, headers: error.headers });
-      }
-      return ctx.render();
+export async function handler(req: Request, ctx: FreshContext) {
+  try {
+    const token = await getAccessToken(req);
+    ctx.state.token = token;
+    const isLoggedIn = ctx.state.token !== "";
+    ctx.state.isLoggedIn = isLoggedIn;
+    return ctx.render();
+  } catch (error) {
+    console.error(error);
+    if (error instanceof RedirectError) {
+      return new Response(null, { status: 303, headers: error.headers });
     }
-  },
-};
+    ctx.state.token = "";
+    ctx.state.isLoggedIn = false;
+    return ctx.render();
+  }
+}
 
-export default function Home({ data }: PageProps<HomePageData | undefined>) {
+export default function Home({ state }: PageProps) {
+  const token: string = typeof state?.token === "string" ? state.token : "";
+  const isLoggedIn: boolean = typeof state?.isLoggedIn === "boolean"
+    ? state.isLoggedIn
+    : false;
   return (
-    <div className="subtle-gradient min-h-screen">
-      <HeaderBar />
+    <>
+      <TokenPersistor token={token} />
+      <div className="subtle-gradient min-h-screen">
+        <HeaderBar isLoggedIn={isLoggedIn} />
 
-      <main className="p-4 flex flex-col justify-center items-center gap-2">
-        {data ? <Tabs data={data} /> : <h1>Sorry could'nt retrieve guides</h1>}
-      </main>
-    </div>
+        <main className="p-4 flex flex-col justify-center items-center gap-2">
+          <Tabs />
+        </main>
+      </div>
+    </>
   );
 }

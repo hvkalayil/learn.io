@@ -10,6 +10,6 @@ export type Guide = {
   published_at: string;
 };
 
-export interface HomePageData {
+export interface HomePageGuides {
   featured: Guide[];
 }

@@ -1,6 +1,6 @@
 import { Handlers } from "$fresh/server.ts";
+import { LOGIN_URL } from "../../config.ts";
 import { getSetCookieHeader } from "../../lib/cookie.ts";
-import { apiFetch } from "../../lib/http.ts";
 
 export const handler: Handlers = {
   POST: async (req) => {
@@ -13,13 +13,12 @@ export const handler: Handlers = {
         return Response.redirect("/auth/login?error=E1", 303);
       }
 
-      const response = await apiFetch(req, {
-        url: "/auth/login",
+      const response = await fetch(LOGIN_URL, {
         method: "POST",
-        body: {
+        body: JSON.stringify({
           email,
           password,
-        },
+        }),
       });
 
       if (response.status !== 200) {
