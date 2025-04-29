@@ -1,11 +1,15 @@
 import { Application, Router } from "@oak/oak";
-import { HOST, PORT } from "./config.ts";
+import { FRONTEND_HOST, HOST, PORT } from "./config.ts";
 import { logger } from "./middleware/logger.ts";
 import v1Router from "./router/v1/v1.router.ts";
+import { oakCors } from "https://deno.land/x/cors@v1.2.2/mod.ts";
 
 const app = new Application();
 const router = new Router();
 
+app.use(oakCors({
+  origin: FRONTEND_HOST,
+}));
 app.use(logger);
 app.use(v1Router.routes());
 

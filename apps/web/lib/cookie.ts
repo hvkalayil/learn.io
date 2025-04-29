@@ -18,6 +18,7 @@ export const getSetCookieHeader = (
 
 export const getTokenFromCookies = (req: Request) => {
   const cookieHeader = req.headers.get("cookie") || "";
+  if (cookieHeader === "") return ["", ""];
   const cookies: { accessToken: string; refreshToken: string } = Object
     .fromEntries(
       cookieHeader.split("; ").map((cookie) => cookie.split("=")),

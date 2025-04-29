@@ -1,4 +1,4 @@
-import { Guide } from "../context/homepage/types.ts";
+import { Guide } from "../lib/models/Guide.ts";
 import { LoveIcon } from "./icons/LoveIcon.tsx";
 
 export function GuideCard({ guide }: { guide: Guide }) {
