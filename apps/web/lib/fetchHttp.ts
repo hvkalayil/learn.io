@@ -3,10 +3,9 @@ interface FetchParams {
   method: "GET";
 }
 
-export const API_URL = "http://localhost:4000/v1";
-
 export async function fetchAPI<T>(params: FetchParams) {
   const token = localStorage.getItem("token") ?? "";
+  const API_URL = localStorage.getItem("API_URL") ?? "";
   const headers = new Headers({
     "Authorization": `Bearer ${token}`,
   });
