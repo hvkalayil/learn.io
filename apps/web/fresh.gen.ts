@@ -7,6 +7,7 @@ import * as $_app from "./routes/_app.tsx";
 import * as $auth_login from "./routes/auth/login.tsx";
 import * as $auth_verifyLogin from "./routes/auth/verifyLogin.tsx";
 import * as $index from "./routes/index.tsx";
+import * as $ConfigSyncer from "./islands/ConfigSyncer.tsx";
 import * as $Tabs from "./islands/Tabs.tsx";
 import * as $TokenPersistor from "./islands/TokenPersistor.tsx";
 import * as $homepage_AllGuides from "./islands/homepage/AllGuides.tsx";
@@ -23,6 +24,7 @@ const manifest = {
     "./routes/index.tsx": $index,
   },
   islands: {
+    "./islands/ConfigSyncer.tsx": $ConfigSyncer,
     "./islands/Tabs.tsx": $Tabs,
     "./islands/TokenPersistor.tsx": $TokenPersistor,
     "./islands/homepage/AllGuides.tsx": $homepage_AllGuides,
