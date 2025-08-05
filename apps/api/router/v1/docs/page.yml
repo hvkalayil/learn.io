@@ -1,0 +1,42 @@
+/v1/page/guide/{guideId}/{pageNumber}:
+  get:
+    summary: Get Pages of a specified guide
+    description: Returns a list of all pages for the guide.
+    parameters:
+      - name: guideId
+        in: path
+        required: true
+        description: ID of the guide to retrieve pages for
+        schema:
+          type: string
+      - name: pageNumber
+        in: path
+        required: true
+        description: Number of the page
+        schema:
+          type: string
+    responses:
+      200:
+        description: Successful response.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                pages:
+                  type: array
+                  items:
+                    $ref: "#/components/schemas/Page"
+      500:
+        description: Internal Server Error.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message:
+                  type: string
+                  example: "Internal Server Error"
+                error:
+                  type: object
+                  example: { "message": "Database connection failed" }
