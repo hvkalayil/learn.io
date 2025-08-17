@@ -21,7 +21,7 @@ app.use(router.allowedMethods());
 try {
   console.info("\x1b[42m\x1b[37m 🧰 DB tools ready \x1b[0m");
   console.info(`\t\x1b[1mLocal:\x1b[0m ${HOST}:${PORT}`);
-  await app.listen({ port: Number(PORT) });
+  await app.listen({ port: Number(PORT), hostname: "0.0.0.0" });
 } catch (error) {
   console.error(`Failed to start server: ${error}`);
 }

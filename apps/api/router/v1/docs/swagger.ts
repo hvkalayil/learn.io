@@ -59,6 +59,22 @@ const apiSpec = {
             "published_at",
           ],
         },
+        Page: {
+          type: "object",
+          properties: {
+            id: { type: "string" },
+            guide_id: { type: "string" },
+            title: { type: "string" },
+            mdx_url: { type: "string", format: "uri" },
+            pageNumber: { type: "integer" },
+            created_at: { type: "string", format: "date-time" },
+          },
+          required: [
+            "id",
+            "guide_id",
+            "title",
+          ],
+        },
       },
     },
   },

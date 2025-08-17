@@ -25,9 +25,11 @@ export function GuideCard({ guide }: { guide: Guide }) {
 
       <div className="p-5">
         {/* guide Title */}
-        <h3 className="text-xl font-bold mb-2 leading-tight">
-          {guide.title}
-        </h3>
+        <a href={`/guides/${guide.id}`}>
+          <h3 className="text-xl font-bold mb-2 leading-tight">
+            {guide.title}
+          </h3>
+        </a>
 
         {/* guide Description */}
         <p className="text-sm mb-4 line-clamp-2">

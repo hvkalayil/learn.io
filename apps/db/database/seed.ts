@@ -30,7 +30,8 @@ const SEED_DATA_GUIDES: GuideModel[] = [
     pages: [
       {
         title: "How to be a Tarzan Developer",
-        mdx_url: "mdx url goes here",
+        mdx_url:
+          "https://raw.githubusercontent.com/hvkalayil/hvkalayil.github.io/main/src/content/blogs/How%20to%20be%20a%20Tarzan%20developer/How%20to%20be%20a%20Tarzan%20developer.md",
         page_number: 1,
       },
     ],
