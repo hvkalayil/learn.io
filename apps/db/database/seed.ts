@@ -36,6 +36,42 @@ const SEED_DATA_GUIDES: GuideModel[] = [
       },
     ],
   },
+  {
+    title: "The BATS Stack",
+    description:
+      "aka “The Avengers of content-focused web dev” — but without the multi-billion-dollar budget.",
+    cover_image_url:
+      "https://raw.githubusercontent.com/hvkalayil/hvkalayil.github.io/main/src/content/blogs/The%20BATS%20Stack/hero.webp",
+    difficulty_level: "intermediate",
+    status: "published",
+    email: "empuran",
+    pages: [
+      {
+        title: "The BATS Stack",
+        mdx_url:
+          "https://raw.githubusercontent.com/hvkalayil/hvkalayil.github.io/main/src/content/blogs/The%20BATS%20Stack/The%20BATS%20Stack.md",
+        page_number: 1,
+      },
+    ],
+  },
+  {
+    title: "DIY Cloud Wizard 🪄",
+    description:
+      "Because sometimes localhost:3000 just isn’t spicy enough.  🌶️",
+    cover_image_url:
+      "https://raw.githubusercontent.com/hvkalayil/hvkalayil.github.io/main/src/content/blogs/DIY%20Cloud%20Wizard/hero.webp",
+    difficulty_level: "intermediate",
+    status: "published",
+    email: "empuran",
+    pages: [
+      {
+        title: "DIY Cloud Wizard 🪄",
+        mdx_url:
+          "https://raw.githubusercontent.com/hvkalayil/hvkalayil.github.io/main/src/content/blogs/DIY%20Cloud%20Wizard/DIY%20Cloud%20Wizard.md",
+        page_number: 1,
+      },
+    ],
+  },
 ];
 
 export const seedData = async (db: Client) => {

@@ -14,7 +14,16 @@ and migrations.
 
 After cloning make sure to setup the project `deno task setup`
 
-You can start the backend using `deno task dev:api`
+You can start all of the service using `deno run start` or you can use the
+individual scripts for them as well
+
+- `deno run dev:api`
+- `deno run dev:web`
+- `deno run dev:db`
+
+CORS is setup to run with FRONTEND_HOST value from env. If you dont have env
+file the default is the frontend local, so it will work fine. But if you have
+env file then that default value will be overridden.
 
 ## Database
 
