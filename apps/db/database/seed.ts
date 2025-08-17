@@ -23,7 +23,7 @@ const SEED_DATA_GUIDES: GuideModel[] = [
     title: "How to be a Tarzan Developer",
     description: "A guide to becoming a Tarzan developer 🏕️💻",
     cover_image_url:
-      "https://hvkalayil.github.io/_astro/tarzan%20deploying.Dng-ET2Z_2tBT5k.webp",
+      "https://raw.githubusercontent.com/hvkalayil/hvkalayil.github.io/main/src/content/blogs/How%20to%20be%20a%20Tarzan%20developer/tarzan%20deploying.webp",
     difficulty_level: "intermediate",
     status: "published",
     email: "empuran",
