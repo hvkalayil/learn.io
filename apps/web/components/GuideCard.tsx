@@ -40,9 +40,10 @@ export function GuideCard({ guide }: { guide: Guide }) {
         <div className="flex gap-2">
           <button
             type="button"
+            onClick={() => globalThis.location.href = `/guides/${guide.id}`}
             className="flex-1 shadow-2xl subtle-gradient py-2.5 px-4 rounded-full font-medium hover:subtle-gradient-reverse focus:ring-2 focus:ring-accent focus:ring-opacity-50"
           >
-            Enroll Now
+            Read
           </button>
 
           <button
