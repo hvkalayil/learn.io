@@ -1,8 +1,9 @@
-export interface Page {
+import { RecordModel } from "npm:pocketbase";
+export interface Page extends RecordModel {
   id: string;
   guide_id: string;
   title: string;
   mdx_url: string;
-  pageNumber: number;
+  page_number: number;
   created_at: string;
 }

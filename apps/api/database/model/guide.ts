@@ -1,4 +1,5 @@
-export interface Guide {
+import { RecordModel } from "npm:pocketbase";
+export interface Guide extends RecordModel {
   id: string;
   title: string;
   description: string;

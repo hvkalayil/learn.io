@@ -7,21 +7,24 @@ export class PageService {
     pages: Page[];
     maxPage: number;
   }> {
-    const [pages] = await Promise.all([
-      this.getPageByGuideIdQuery(params),
-    ]);
-    return { pages, maxPage: pages[0].max_page };
+    const pages = await this.getPageByGuideIdQuery(params);
+    // Derive max page number from the full set of pages for this guide
+    const allPages = await DbService.getList<Page>("pages", {
+      filter: `guide_id = "${params.guideId}"`,
+      fields: "page_number",
+    });
+    const maxPage = allPages.reduce(
+      (max, p) => Math.max(max, p.page_number ?? 0),
+      0,
+    );
+    return { pages, maxPage };
   }
 
   private static async getPageByGuideIdQuery(params: GetPageParams) {
-    return await DbService.executeQuery<Page & { max_page: number }>(`
-          SELECT *, (
-            SELECT MAX(page_number)
-            FROM pages
-            WHERE guide_id='${params.guideId}'
-          ) AS max_page
-          FROM pages
-          WHERE guide_id='${params.guideId}' AND page_number=${params.pageNumber};
-      `);
+    // PocketBase: filter by guide_id and page_number
+    return await DbService.getList<Page>("pages", {
+      filter:
+        `guide_id = "${params.guideId}" && page_number = ${params.pageNumber}`,
+    });
   }
 }

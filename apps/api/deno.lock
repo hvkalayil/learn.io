@@ -13,6 +13,7 @@
     "jsr:@std/path@1": "1.0.8",
     "npm:@types/node@*": "22.12.0",
     "npm:path-to-regexp@^6.3.0": "6.3.0",
+    "npm:pocketbase@~0.26.8": "0.26.8",
     "npm:swagger-jsdoc@*": "6.2.8"
   },
   "jsr": {
@@ -197,6 +198,9 @@
     },
     "path-to-regexp@6.3.0": {
       "integrity": "sha512-Yhpw4T9C6hPpgPeA28us07OJeqZ5EzQTkbfwuhsUg0c237RomFoETJgmp2sa3F/41gfLE6G5cqcYwznmeEeOlQ=="
+    },
+    "pocketbase@0.26.8": {
+      "integrity": "sha512-aQ/ewvS7ncvAE8wxoW10iAZu6ElgbeFpBhKPnCfvRovNzm2gW8u/sQNPGN6vNgVEagz44kK//C61oKjfa+7Low=="
     },
     "swagger-jsdoc@6.2.8": {
       "integrity": "sha512-VPvil1+JRpmJ55CgAtn8DIcpBs0bL5L3q5bVQvF4tAW/k/9JYSj7dCpaYCAv5rufe0vcCbBRQXGvzpkWjvLklQ==",
@@ -408,7 +412,8 @@
   },
   "workspace": {
     "dependencies": [
-      "jsr:@oak/oak@^17.1.4"
+      "jsr:@oak/oak@^17.1.4",
+      "npm:pocketbase@~0.26.8"
     ]
   }
 }

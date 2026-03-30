@@ -1,40 +1,71 @@
-import { QueryArguments } from "https://deno.land/x/postgres@v0.19.3/mod.ts";
+import { RecordListOptions, RecordModel } from "npm:pocketbase";
 import { getDbClient } from "../database/client.ts";
-
 export class DbService {
-  static async executeQuery<T>(
-    query: string,
-    args?: QueryArguments | undefined,
+  /**
+   * Fetch a list of records from a PocketBase collection.
+   * @param collection  PocketBase collection name
+   * @param options     Optional filter/sort/expand query options
+   * @returns           Typed array of records
+   */
+  static async getList<T extends RecordModel>(
+    collection: string,
+    options?: RecordListOptions,
   ): Promise<T[]> {
-    const db = await getDbClient();
-    const result = await db.queryObject<T>(query, args);
-    return result.rows;
-  }
-
-  static async checkHealth() {
-    const db = await getDbClient();
-    const result = await db.queryObject("SELECT NOW()");
+    const pb = await getDbClient();
+    const result = await pb.collection(collection).getFullList<T>(options);
     return result;
   }
 
-  static async executeTransaction<T>(
-    name: string,
-    queries: { query: string; args?: QueryArguments | undefined }[],
-  ) {
-    const results = [];
-    const db = await getDbClient();
-    const transaction = await db.createTransaction(name);
-    try {
-      await transaction.begin();
-      for (const { query, args } of queries) {
-        const res = await transaction.queryObject<T>(query, args);
-        results.push(...res.rows);
-      }
-      await transaction.commit();
-    } catch (error) {
-      console.error(error);
-      await transaction.rollback();
-    }
-    return results;
+  /**
+   * Fetch the first record matching a filter from a PocketBase collection.
+   * Throws if no record is found.
+   */
+  static async getFirstMatch<T extends RecordModel>(
+    collection: string,
+    filter: string,
+    options?: RecordListOptions,
+  ): Promise<T> {
+    const pb = await getDbClient();
+    return await pb.collection(collection).getFirstListItem<T>(filter, options);
+  }
+
+  /**
+   * Create a new record in a PocketBase collection.
+   */
+  static async create<T extends RecordModel>(
+    collection: string,
+    data: Partial<T>,
+  ): Promise<T> {
+    const pb = await getDbClient();
+    return await pb.collection(collection).create<T>(data);
+  }
+
+  /**
+   * Update an existing record by id in a PocketBase collection.
+   */
+  static async update<T extends RecordModel>(
+    collection: string,
+    id: string,
+    data: Partial<T>,
+  ): Promise<T> {
+    const pb = await getDbClient();
+    return await pb.collection(collection).update<T>(id, data);
+  }
+
+  /**
+   * Delete a record by id from a PocketBase collection.
+   */
+  static async delete(collection: string, id: string): Promise<boolean> {
+    const pb = await getDbClient();
+    return await pb.collection(collection).delete(id);
+  }
+  /**
+   * Health check — verifies that the PocketBase instance is reachable
+   * by fetching server health info.
+   */
+  static async checkHealth(): Promise<{ alive: boolean; message: string }> {
+    const pb = await getDbClient();
+    const health = await pb.health.check();
+    return { alive: true, message: health.message };
   }
 }

@@ -16,12 +16,3 @@ services:
       - "1002:4000"
     env_file:
       - .api.env
-
-  learnio-db:
-    build:
-      context: apps/db
-      dockerfile: Dockerfile
-    ports:
-      - "1003:4001"
-    env_file:
-      - .db.env

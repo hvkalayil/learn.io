@@ -1,2 +1,0 @@
-ALTER TABLE migrations
-ADD COLUMN created_at TIMESTAMPTZ DEFAULT now();
