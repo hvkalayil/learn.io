@@ -13,6 +13,7 @@
     "jsr:@std/path@1": "1.0.8",
     "npm:@types/node@*": "22.12.0",
     "npm:path-to-regexp@^6.3.0": "6.3.0",
+    "npm:pocketbase@*": "0.26.8",
     "npm:pocketbase@~0.26.8": "0.26.8",
     "npm:swagger-jsdoc@*": "6.2.8"
   },

@@ -15,9 +15,9 @@ export class HomePageService {
   }
   private static async getFeaturedGuides() {
     // PocketBase: filter by status and sort by published_at descending
-    return await DbService.getList<Guide>("guides", {
+    return await DbService.getList<Guide>("learnio_guides", {
       filter: `status = "published"`,
       sort: "-published_at",
-    });
+    }, ["cover_image_url"]);
   }
 }

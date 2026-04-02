@@ -9,7 +9,7 @@ export class PageService {
   }> {
     const pages = await this.getPageByGuideIdQuery(params);
     // Derive max page number from the full set of pages for this guide
-    const allPages = await DbService.getList<Page>("pages", {
+    const allPages = await DbService.getList<Page>("learnio_pages", {
       filter: `guide_id = "${params.guideId}"`,
       fields: "page_number",
     });
@@ -22,9 +22,9 @@ export class PageService {
 
   private static async getPageByGuideIdQuery(params: GetPageParams) {
     // PocketBase: filter by guide_id and page_number
-    return await DbService.getList<Page>("pages", {
+    return await DbService.getList<Page>("learnio_pages", {
       filter:
         `guide_id = "${params.guideId}" && page_number = ${params.pageNumber}`,
-    });
+    }, ["mdx_url"]);
   }
 }

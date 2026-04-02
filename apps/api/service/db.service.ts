@@ -1,19 +1,23 @@
-import { RecordListOptions, RecordModel } from "npm:pocketbase";
+import PocketBase, { RecordListOptions, RecordModel } from "npm:pocketbase";
 import { getDbClient } from "../database/client.ts";
 export class DbService {
   /**
    * Fetch a list of records from a PocketBase collection.
    * @param collection  PocketBase collection name
    * @param options     Optional filter/sort/expand query options
+   * @param fileFields  Optional fields which are files
    * @returns           Typed array of records
    */
   static async getList<T extends RecordModel>(
     collection: string,
     options?: RecordListOptions,
+    fileFields?: Array<string>,
   ): Promise<T[]> {
     const pb = await getDbClient();
     const result = await pb.collection(collection).getFullList<T>(options);
-    return result;
+
+    if (!fileFields?.length) return result;
+    return result.map((record) => this.resolveFileUrls(pb, record, fileFields));
   }
 
   /**
@@ -24,9 +28,14 @@ export class DbService {
     collection: string,
     filter: string,
     options?: RecordListOptions,
+    fileFields?: Array<string>,
   ): Promise<T> {
     const pb = await getDbClient();
-    return await pb.collection(collection).getFirstListItem<T>(filter, options);
+    const record = await pb.collection(collection).getFirstListItem<T>(
+      filter,
+      options,
+    );
+    return this.resolveFileUrls(pb, record, fileFields);
   }
 
   /**
@@ -34,10 +43,12 @@ export class DbService {
    */
   static async create<T extends RecordModel>(
     collection: string,
-    data: Partial<T>,
+    data: Partial<T> | FormData,
+    fileFields?: Array<string>,
   ): Promise<T> {
     const pb = await getDbClient();
-    return await pb.collection(collection).create<T>(data);
+    const record = await pb.collection(collection).create<T>(data);
+    return this.resolveFileUrls(pb, record, fileFields);
   }
 
   /**
@@ -46,10 +57,38 @@ export class DbService {
   static async update<T extends RecordModel>(
     collection: string,
     id: string,
-    data: Partial<T>,
+    data: Partial<T> | FormData,
+    fileFields?: Array<string>,
   ): Promise<T> {
     const pb = await getDbClient();
-    return await pb.collection(collection).update<T>(id, data);
+    const record = await pb.collection(collection).update<T>(id, data);
+    return this.resolveFileUrls(pb, record, fileFields);
+  }
+
+  /**
+   * Private helper to resolve filenames into full PocketBase URLs
+   */
+  private static resolveFileUrls<T extends RecordModel>(
+    pb: PocketBase,
+    record: T,
+    fileFields?: Array<string>,
+  ): T {
+    if (!fileFields?.length) return record;
+
+    const updated = { ...record };
+    for (const field of fileFields) {
+      const fileName = record[field];
+      if (!fileName) continue;
+
+      if (Array.isArray(fileName)) {
+        (updated as RecordModel)[field] = fileName.map((f) =>
+          pb.files.getURL(record, f)
+        );
+      } else {
+        (updated as RecordModel)[field] = pb.files.getURL(record, fileName);
+      }
+    }
+    return updated;
   }
 
   /**

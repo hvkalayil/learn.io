@@ -65,7 +65,7 @@ export class AuthService {
     try {
       // PocketBase: filter users collection by email
       const user = await DbService.getFirstMatch<User>(
-        "users",
+        "learnio_users",
         `email = "${email}"`,
       );
       return { exist: true, user };
@@ -77,7 +77,7 @@ export class AuthService {
   static async #createNewUser(email: string, password: string): Promise<User> {
     const hashedPassword = await hash(password);
     // PocketBase: create a record in the users collection
-    return await DbService.create<User>("users", {
+    return await DbService.create<User>("learnio_users", {
       email,
       password: hashedPassword,
       type: "learner",
