@@ -1,5 +1,6 @@
 import PocketBase, { RecordListOptions, RecordModel } from "npm:pocketbase";
 import { getDbClient } from "../database/client.ts";
+import { DB_FILE_URL, DB_URL } from "../config.ts";
 export class DbService {
   /**
    * Fetch a list of records from a PocketBase collection.
@@ -82,10 +83,11 @@ export class DbService {
 
       if (Array.isArray(fileName)) {
         (updated as RecordModel)[field] = fileName.map((f) =>
-          pb.files.getURL(record, f)
+          pb.files.getURL(record, f).replace(DB_URL, DB_FILE_URL)
         );
       } else {
-        (updated as RecordModel)[field] = pb.files.getURL(record, fileName);
+        (updated as RecordModel)[field] = pb.files.getURL(record, fileName)
+          .replace(DB_URL, DB_FILE_URL);
       }
     }
     return updated;

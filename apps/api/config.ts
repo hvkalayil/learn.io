@@ -6,3 +6,5 @@ export const DB_PASSWORD = Deno.env.get("DB_PASSWORD") || "password goes here";
 export const API_KEY = Deno.env.get("API_KEY") || "Secret key";
 export const FRONTEND_HOST = Deno.env.get("FRONTEND_HOST") ||
   "http://localhost:8000";
+export const DB_FILE_URL = Deno.env.get("DB_FILE_URL") ||
+  "http://localhost:1003";
