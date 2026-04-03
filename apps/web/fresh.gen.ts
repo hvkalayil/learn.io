@@ -10,6 +10,7 @@ import * as $guides_guideId_index from "./routes/guides/[guideId]/index.tsx";
 import * as $guides_guideId_pages_pageNumber_ from "./routes/guides/[guideId]/pages/[pageNumber].tsx";
 import * as $index from "./routes/index.tsx";
 import * as $ConfigSyncer from "./islands/ConfigSyncer.tsx";
+import * as $GuidePageIsland from "./islands/GuidePageIsland.tsx";
 import * as $Tabs from "./islands/Tabs.tsx";
 import * as $TokenPersistor from "./islands/TokenPersistor.tsx";
 import * as $homepage_AllGuides from "./islands/homepage/AllGuides.tsx";
@@ -30,6 +31,7 @@ const manifest = {
   },
   islands: {
     "./islands/ConfigSyncer.tsx": $ConfigSyncer,
+    "./islands/GuidePageIsland.tsx": $GuidePageIsland,
     "./islands/Tabs.tsx": $Tabs,
     "./islands/TokenPersistor.tsx": $TokenPersistor,
     "./islands/homepage/AllGuides.tsx": $homepage_AllGuides,
