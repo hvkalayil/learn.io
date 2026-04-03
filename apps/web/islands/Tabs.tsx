@@ -25,36 +25,47 @@ export function Tabs() {
   ];
 
   return (
-    <div className="w-full p-6">
-      <div className="flex mb-8 relative">
-        <div className="absolute h-12 w-full subtle-gradient rounded-full" />
+    <div className="w-full max-w-6xl mx-auto py-8">
+      <div className="flex justify-center mb-12">
+        <div className="glass p-1.5 rounded-[2rem] flex items-center gap-1">
+          {tabs.map((tab) => (
+            <button
+              key={tab.label}
+              type="button"
+              aria-selected={activeTab === tab.label}
+              className={`relative flex items-center gap-2 py-3 px-6 rounded-[1.8rem] transition-all duration-300 ease-out group overflow-hidden ${
+                activeTab === tab.label
+                  ? "text-primary shadow-lg"
+                  : "text-white/60 hover:text-white"
+              }`}
+              onClick={() => setActiveTab(tab.label)}
+            >
+              {activeTab === tab.label && (
+                <span className="absolute inset-0 bg-white shadow-xl transition-all duration-500 ease-out -z-0" />
+              )}
 
-        {tabs.map((tab) => (
-          <button
-            key={tab.label}
-            type="button"
-            aria-selected={activeTab === tab.label}
-            className={`relative z-10 flex-1 flex items-center justify-center py-3 px-4 transition-all duration-300 ease-out ${
-              activeTab === tab.label
-                ? "font-medium"
-                : "text-gray-100 hover:text-gray-200"
-            }`}
-            onClick={() => setActiveTab(tab.label)}
-          >
-            {activeTab === tab.label && (
-              <span className="absolute inset-0 subtle-gradient-reverse rounded-full shadow-md transition-all duration-300 ease-out" />
-            )}
-
-            <span className="relative flex items-center">
-              {tab.icon}
-              <span className="hidden sm:inline">{tab.label}</span>
-            </span>
-          </button>
-        ))}
+              <span
+                className={`relative z-10 flex items-center transition-transform group-hover:scale-105 duration-300 ${
+                  activeTab === tab.label ? "scale-105" : ""
+                }`}
+              >
+                <div
+                  className={`transition-colors duration-300 ${
+                    activeTab === tab.label ? "text-primary" : "text-white/40"
+                  }`}
+                >
+                  {tab.icon}
+                </div>
+                <span className="ml-2 font-semibold text-sm tracking-tight hidden sm:inline">
+                  {tab.label}
+                </span>
+              </span>
+            </button>
+          ))}
+        </div>
       </div>
 
-      {/* Content Area with Animation */}
-      <div className="p-6 min-h-64">
+      <div className="min-h-[400px]">
         {activeTab === "All Guides" && (
           <div className="animate-fadeIn">
             <AllGuides />
