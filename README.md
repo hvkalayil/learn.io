@@ -19,17 +19,7 @@ individual scripts for them as well
 
 - `deno run dev:api`
 - `deno run dev:web`
-- `deno run dev:db`
 
 CORS is setup to run with FRONTEND_HOST value from env. If you dont have env
 file the default is the frontend local, so it will work fine. But if you have
 env file then that default value will be overridden.
-
-## Database
-
-The database uses 2 users
-
-- one with DDL privileges for the db service
-- one with DML privileges for the api service
-
-This constricts extend of access for the API and adds security and isolation

@@ -1,4 +1,5 @@
-export interface User {
+import { RecordModel } from "npm:pocketbase";
+export interface User extends RecordModel {
   id: string;
   email: string;
   password: string;

@@ -4,7 +4,8 @@
     "start": "deno run -A --watch dev.ts"
   },
   "imports": {
-    "@oak/oak": "jsr:@oak/oak@^17.1.4"
+    "@oak/oak": "jsr:@oak/oak@^17.1.4",
+    "pocketbase": "npm:pocketbase@^0.26.8"
   },
   "nodeModulesDir": "auto"
 }

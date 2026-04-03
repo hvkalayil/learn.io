@@ -27,16 +27,23 @@ export default function Home({ state }: PageProps) {
   const isLoggedIn: boolean = typeof state?.isLoggedIn === "boolean"
     ? state.isLoggedIn
     : false;
+
   return (
     <>
       <TokenPersistor token={token} />
-      <div className="subtle-gradient min-h-screen">
-        <HeaderBar isLoggedIn={isLoggedIn} />
-
-        <main className="p-4 flex flex-col justify-center items-center gap-2">
-          <Tabs />
-        </main>
-      </div>
+      <HeaderBar isLoggedIn={isLoggedIn} />
+      <main className="flex-1 max-w-[1400px] mx-auto w-full px-6 py-12">
+        <div className="mb-16 text-center">
+          <h2 className="text-5xl md:text-7xl font-black tracking-tightest mb-6 bg-clip-text text-transparent bg-gradient-to-b from-white to-white/40">
+            Unlock Your Potential
+          </h2>
+          <p className="text-lg text-white/50 max-w-2xl mx-auto font-medium">
+            Join a community of lifelong learners and expert educators. Master
+            any skill with our curated, high-quality guides.
+          </p>
+        </div>
+        <Tabs />
+      </main>
     </>
   );
 }

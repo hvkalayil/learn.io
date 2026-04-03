@@ -6,7 +6,10 @@ export const v1Controller = {
   health: async (context: Context) => {
     try {
       const result = await DbService.checkHealth();
-      context.response.body = { health: "OK", dbTime: result.rows[0] };
+      context.response.body = {
+        health: result.alive ? "OK" : "FAIL",
+        message: result.message,
+      };
     } catch (error) {
       sendErrorResponse(context, error);
     }
